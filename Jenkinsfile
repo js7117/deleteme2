@@ -1,10 +1,15 @@
 pipeline {
     agent any
 
+    
     stages {
-        stage('Hello') {
+        stage('Login and Push'){
             steps {
-                echo 'Hello World'
+                script{
+                    withDockerRegistry(credentialsId: 'Docker') {
+                        docker.build('bjgomes/flaskapp').push('latest')
+                    }
+                }
             }
         }
     }
